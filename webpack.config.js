@@ -2,6 +2,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 // Creamos un nuevo modulo que vamos a exportar con esta configuracion
 // Vamos a configurar cada unos de los elementos que necesitamos
@@ -52,15 +53,6 @@ module.exports = {
           'sass-loader',
         ],
       },
-      /*{
-        test: /\.(png|gif|jpg)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: { name: 'assets/[hash].[ext]' },
-          }
-        ],
-      },*/
     ],
   },
   // Se añaden los plugins que necesitamos
@@ -73,6 +65,13 @@ module.exports = {
       //Donde esta ubicado el template que tenemos
       template: './public/index.html',
       filename: './index.html',
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: 'public/manifest.json', to: '' },
+        { from: 'public/service-worker.js', to: '' },
+        { from: 'public/icon.png', to: 'assets' },
+      ],
     }),
   ],
   devServer: {
